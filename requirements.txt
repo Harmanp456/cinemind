@@ -9,6 +9,6 @@ scipy==1.17.1 --only-binary=:all:
 
 
 
-scikit-learn==1.5.2
+scikit-learn==1.7.2
 
 streamlit==1.36.0
