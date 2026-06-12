@@ -201,8 +201,8 @@ def poster_grid(cards, cols=6, key_prefix="grid"):
             poster = m.get("poster_url")
 
             with colset[c]:
-                if poster:
-                    st.image(poster, width="stretch", )
+                if isinstance(poster, str) and poster.strip().startswith(("http://", "https://", "data:")):
+                    st.image(poster, use_container_width=True)
                 else:
                     st.write("🖼️ No poster")
 
@@ -348,7 +348,8 @@ st.divider()
 # ==========================================================
 if st.session_state.view == "home":
     typed = st.text_input(
-        "",
+        label="Search movies",
+        label_visibility="collapsed",
         placeholder="🔍 Search movies, actors, genres..."
     )
 
@@ -453,7 +454,7 @@ elif st.session_state.view == "details":
     with left:
         st.markdown("<div class='card'>", unsafe_allow_html=True)
         if data.get("poster_url"):
-            st.image(data["poster_url"], width="stretch")
+            st.image(data["poster_url"], use_container_width=True)
         else:
             st.write("🖼️ No poster")
         st.markdown("</div>", unsafe_allow_html=True)
@@ -481,7 +482,7 @@ elif st.session_state.view == "details":
 
     if data.get("backdrop_url"):
         st.markdown("#### Backdrop")
-        st.image(data["backdrop_url"], width="stretch")
+        st.image(data["backdrop_url"], use_container_width=True)
 
     st.divider()
     st.markdown("### ✅ Recommendations")
