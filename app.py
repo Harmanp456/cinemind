@@ -1,6 +1,19 @@
 import requests
 import streamlit as st
 
+# Backward compatibility for st.image(use_container_width=True) in older Streamlit versions
+_orig_image = st.image
+def compatible_image(image, *args, **kwargs):
+    if "use_container_width" in kwargs:
+        try:
+            return _orig_image(image, *args, **kwargs)
+        except TypeError:
+            kwargs.pop("use_container_width", None)
+            kwargs["use_column_width"] = True
+            return _orig_image(image, *args, **kwargs)
+    return _orig_image(image, *args, **kwargs)
+st.image = compatible_image
+
 # =============================
 # CONFIG
 # =============================
